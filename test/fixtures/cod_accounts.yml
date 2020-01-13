@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ship_date: 2019-12-11
+  invoice_numb: MyString
+  route_code: MyString
+  cust_code: MyString
+  cust_name: MyString
+  cost_ctr: MyString
+  logistics_complete_date: 2019-12-11 16:58:29
+  accounting_complete_date: 2019-12-11 16:58:29
+  reason_code: MyString
+  reason_details: MyString
+  logistics_completed: false
+  accounting_completed: false
+  logistics_agent: MyString
+  received_as: MyString
+  amount_owed: 1.5
+  amount_extra: 1.5
+  amount_received: 1.5
+  amount_credit: 1.5
+  credit_amount: 1.5
+
+two:
+  ship_date: 2019-12-11
+  invoice_numb: MyString
+  route_code: MyString
+  cust_code: MyString
+  cust_name: MyString
+  cost_ctr: MyString
+  logistics_complete_date: 2019-12-11 16:58:29
+  accounting_complete_date: 2019-12-11 16:58:29
+  reason_code: MyString
+  reason_details: MyString
+  logistics_completed: false
+  accounting_completed: false
+  logistics_agent: MyString
+  received_as: MyString
+  amount_owed: 1.5
+  amount_extra: 1.5
+  amount_received: 1.5
+  amount_credit: 1.5
+  credit_amount: 1.5

@@ -1,0 +1,2 @@
+module CodAccountsHelper
+end

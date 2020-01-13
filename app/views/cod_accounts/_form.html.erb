@@ -1,0 +1,122 @@
+<%= form_with(model: cod_account, local: true) do |form| %>
+  <% if cod_account.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(cod_account.errors.count, "error") %> prohibited this cod_account from being saved:</h2>
+
+      <ul>
+      <% cod_account.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Ship date</th>
+        <th>Invoice number</th>
+        <th>Route code</th>
+        <th>Customer code</th>
+        <th>Customer name</th>
+        <th>Cost center</th>
+        <th>Amount owed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= display_date(@cod_account.ship_date) %></td>
+        <td><%= @cod_account.invoice_numb %></td>
+        <td><%= @cod_account.route_code %></td>
+        <td><%= @cod_account.cust_code %></td>
+        <td><%= @cod_account.cust_name %></td>
+        <td><%= @cod_account.cost_ctr %></td>
+        <td><%= @cod_account.amount_owed %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <% if current_user.cod_role != 'Logistics' %>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Logistics user</th>
+          <th>Logistics completed</th>
+          <% if current_user.cod_role != 'Accounting' %>
+            <th>Accounting completed</th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @cod_account.logistics_agent %></td>
+          <td><%= display_date(@cod_account.logistics_complete_date) %></td>
+          <% if current_user.cod_role != 'Accounting' %>
+            <td><%= display_date(@cod_account.accounting_complete_date) %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+
+  <% if current_user.cod_role != 'Accounting' %>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th><%= form.label :reason_code %></th>
+          <th><%= form.label :received_as %></th>
+          <th><%= form.label :check_numb, "Check number" %></th>
+          <th><%= form.label :amount_received %></th>
+          <th><%= form.label :logistics_completed %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> <%= form.select :reason_code, @reasons, {}, {:value => params[:cod_account_reason_code], include_blank: true } %> </td>
+          <td> <%= form.select :received_as, @received_as, {}, {:value => params[:cod_account_received_as] } %> </td>
+          <td> <%= form.text_field :check_numb, id: :cod_account_check_numb %></td>
+          <td> <%= form.number_field :amount_received, id: :cod_account_amount_received, step: 0.01 %></td>
+          <td> <%= form.check_box :logistics_completed, id: :cod_account_logistics_completed %> </td>
+        </tr>
+      </tbody>
+    </table>
+  <% else %>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Reason code</th>
+          <th>Logistics user</th>
+          <th>Recieved as</th>
+          <th>Check Number</th>
+          <th>Amount recieved</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> <%= @cod_account.reason_code %> </td>
+          <td> <%= @cod_account.logistics_agent %> </td>
+          <td> <%= @cod_account.received_as %> </td>
+          <% if @cod_account.check_numb %>
+            <td> <%= @cod_account.check_numb %> </td>
+          <% else %>
+            <td>  </td>
+          <% end %>
+          <td> <%= @cod_account.amount_received %> </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="field">
+      <%= form.label :accounting_completed, "Accounting verified" %>
+      <%= form.check_box :accounting_completed, id: :cod_account_accounting_completed %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes, id: :cod_account_notes %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Update" %>
+  </div>
+<% end %>

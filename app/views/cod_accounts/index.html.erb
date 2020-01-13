@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<% if $ship_date == 'Today' %>
+  <h2>COD Accounts For CC: <%= $cc %> Ship Date: <%= display_date(Date.current) %> </h2>
+<% else %>
+  <h2>COD Accounts For CC: <%= $cc %> Ship Date: Before <%= display_date(Date.current) %> </h2>
+<% end %>
+
+<table id="normal_dt"  class="stripe" class="mytable" class="display" cellspacing="0" >
+  <thead>
+    <tr>
+      <% if $ship_date == 'Before' %>
+        <th>Ship date</th>
+      <% end %>
+      <th>Route code</th>
+      <th>Invoice numb</th>
+      <th>Cust code</th>
+      <th>Cust name</th>
+      <th>Amount owed</th>
+      <th></th>
+      <% if current_user.cod_role == "Admin" %>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cod_accounts.each do |cod_account| %>
+      <tr>
+        <% if $ship_date == 'Before' %>
+          <td><%= cod_account.ship_date %></td>
+        <% end %>
+        <td><%= cod_account.route_code %></td>
+        <td><%= cod_account.invoice_numb %></td>
+        <td><%= cod_account.cust_code %></td>
+        <td><%= cod_account.cust_name %></td>
+        <td><%= cod_account.amount_owed %></td>
+        <td><%= link_to 'Edit', edit_cod_account_path(cod_account), class: "btn btn-primary" %></td>
+        <% if current_user.cod_role == "Admin" %>
+          <td><%= link_to 'Delete', cod_account, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

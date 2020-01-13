@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  invoice_numb: MyString
+  order_numb: MyString
+  rel_numb: MyString
+  ship_date: 2019-12-12
+  sub_total: 1.5
+  charged_frt: 1.5
+
+two:
+  invoice_numb: MyString
+  order_numb: MyString
+  rel_numb: MyString
+  ship_date: 2019-12-12
+  sub_total: 1.5
+  charged_frt: 1.5

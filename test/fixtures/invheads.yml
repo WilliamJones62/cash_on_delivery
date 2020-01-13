@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  invoice_numb: MyString
+  order_numb: MyString
+  rel_numb: MyString
+  ship_date: 2019-12-11
+
+two:
+  invoice_numb: MyString
+  order_numb: MyString
+  rel_numb: MyString
+  ship_date: 2019-12-11

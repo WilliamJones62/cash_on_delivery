@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<h2>Enter Cost Center And Shipping Date</h2>
+
+<%= form_with url: cod_accounts_path, local: true, method: 'get' do |f| %>
+  <%= f.label(:cost_ctr, 'Cost Center:') %>
+  <%= f.select :cost_ctr, @ccs, {}, id: "cost_ctr"  %>
+  <%= f.label(:ship_date, 'Shipping Date:') %>
+  <%= f.select :ship_date, ['Today', 'Before'], {}, id: "cost_ctr"  %>
+  <%= f.submit "Enter" %>
+<% end %>
