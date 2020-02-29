@@ -60,4 +60,4 @@ gem 'devise'
 # Fancy styling
 gem 'bootstrap-sass'
 
-gem 'rake', '12.3.2'
+gem 'rake', '12.3.3'
