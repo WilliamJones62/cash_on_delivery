@@ -11,7 +11,7 @@ class CodAccountsController < ApplicationController
     if $ship_date == 'Today'
       invoices = Invhead.where(cost_ctr: $cc).where("ship_date = ?", Date.current).where("terms_code LIKE :prefix", prefix: "COD%")
     else
-      invoices = Invhead.where(cost_ctr: $cc).where("ship_date < ?", Date.current).where("ship_date > ?", "2019-12-15".to_date).where("terms_code LIKE :prefix", prefix: "COD%")
+      invoices = Invhead.where(cost_ctr: $cc).where("ship_date < ?", Date.current).where("ship_date > ?", "2020-01-15".to_date).where("terms_code LIKE :prefix", prefix: "COD%")
     end
     invoices.each do |i|
       # create cod_account records for this cost center and ship date if they don't already exist
@@ -23,19 +23,31 @@ class CodAccountsController < ApplicationController
           codaccount.invoice_numb = i.invoice_numb
           codaccount.ship_date = i.ship_date
           invview = Invheadview.find_by invoice_numb: i.invoice_numb
-          codaccount.amount_owed = (invview.sub_total + invview.charged_frt).round(2)
-          ordhead = Ordhead.find_by order_numb: i.order_numb, rel_numb: i.rel_numb
-          codaccount.route_code = ordhead.route_code
-          if codaccount.route_code.length == 1
-            # need to prefix 1 digit route codes with blank to make them sort correctly
-            codaccount.route_code.insert(0, '0')
+          if invview
+            if !invview.sub_total
+              invview.sub_total = 0
+            end
+            if !invview.charged_frt
+              invview.charged_frt = 0
+            end
+            codaccount.amount_owed = (invview.sub_total + invview.charged_frt).round(2)
+          else
+            codaccount.amount_owed = 0
           end
-          codaccount.cust_code = ordhead.cust_code
-          codaccount.cust_name = ordhead.cust_name
-          codaccount.cost_ctr = ordhead.cost_ctr
-          codaccount.logistics_completed = false
-          codaccount.accounting_completed = false
-          codaccount.save
+          ordhead = Ordhead.find_by order_numb: i.order_numb, rel_numb: i.rel_numb
+          if ordhead
+            codaccount.route_code = ordhead.route_code
+            if codaccount.route_code.length == 1
+              # need to prefix 1 digit route codes with blank to make them sort correctly
+              codaccount.route_code.insert(0, '0')
+            end
+            codaccount.cust_code = ordhead.cust_code
+            codaccount.cust_name = ordhead.cust_name
+            codaccount.cost_ctr = ordhead.cost_ctr
+            codaccount.logistics_completed = false
+            codaccount.accounting_completed = false
+            codaccount.save
+          end
         end
       end
     end
