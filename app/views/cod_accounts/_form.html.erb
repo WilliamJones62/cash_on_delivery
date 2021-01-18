@@ -72,7 +72,7 @@
       </thead>
       <tbody>
         <tr>
-          <td> <%= form.select :reason_code, @reasons, {}, {:value => params[:cod_account_reason_code], include_blank: true } %> </td>
+          <td> <%= form.select :reason_code, @reasons, {:include_blank => true}, {:value => params[:cod_account_reason_code]} %> </td>
           <td> <%= form.select :received_as, @received_as, {}, {:value => params[:cod_account_received_as] } %> </td>
           <td> <%= form.text_field :check_numb, id: :cod_account_check_numb %></td>
           <td> <%= form.number_field :amount_received, id: :cod_account_amount_received, step: 0.01 %></td>

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'cod_accounts/cc_date'
   get 'cod_accounts/selected'
+  get 'cod_accounts/accounts'
+  get 'cod_accounts/verified'
   resources :cod_accounts
   devise_for :users
   devise_scope :user do

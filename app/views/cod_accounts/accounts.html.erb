@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<h2>COD Accounts For CC: <%= @cc %> </h2>
+
+<%= form_with url: cod_accounts_verified_path, local: true, method: 'get' do |f| %>
+<table id="normal_dt"  class="stripe" class="mytable" class="display" cellspacing="0" >
+  <thead>
+    <tr>
+      <th>Ship date</th>
+      <th>Route code</th>
+      <th>Invoice numb</th>
+      <th>Cust code</th>
+      <th>Cust name</th>
+      <th>Amount owed</th>
+      <th>Verified?</th>
+      <th hidden>ID</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% x = 0 %>
+    <% @cod_accounts.each do |cod_account| %>
+      <% x += 1 %>
+      <% verifiedi = "verified"+x.to_s %>
+      <% idi = "id"+x.to_s %>
+      <tr>
+        <td><%= display_date(cod_account.ship_date) %></td>
+        <td><%= cod_account.route_code %></td>
+        <td><%= cod_account.invoice_numb %></td>
+        <td><%= cod_account.cust_code %></td>
+        <td><%= cod_account.cust_name %></td>
+        <td><%= cod_account.amount_owed %></td>
+        <td><%= f.check_box verifiedi %> </td>
+        <td hidden ><%= f.text_field idi, :value => cod_account[:id].to_s, :readonly => true %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= f.submit "Verify CODs" %>
+<% end %>

@@ -1,11 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<h2>Enter Cost Center And Shipping Date</h2>
-
-<%= form_with url: cod_accounts_path, local: true, method: 'get' do |f| %>
-  <%= f.label(:cost_ctr, 'Cost Center:') %>
-  <%= f.select :cost_ctr, @ccs, {}, id: "cost_ctr"  %>
-  <%= f.label(:ship_date, 'Shipping Date:') %>
-  <%= f.select :ship_date, ['Today', 'Before'], {}, id: "cost_ctr"  %>
-  <%= f.submit "Enter" %>
+<% if current_user.cod_role != 'Accounting' %>
+  <h2>Enter Cost Center And Shipping Date</h2>
+  <%= form_with url: cod_accounts_path, local: true, method: 'get' do |f| %>
+    <%= f.label(:cost_ctr, 'Cost Center:') %>
+    <%= f.select :cost_ctr, @ccs, {}, id: "cost_ctr"  %>
+    <%= f.label(:ship_date, 'Shipping Date:') %>
+    <%= f.date_field :ship_date, id: "ship_date", :value => @ship_date %></td>
+    <%= f.submit "Enter" %>
+  <% end %>
+<% else %>
+  <h2>Enter Cost Center</h2>
+  <%= form_with url: cod_accounts_accounts_path, local: true, method: 'get' do |f| %>
+    <%= f.label(:cost_ctr, 'Cost Center:') %>
+    <%= f.select :cost_ctr, @ccs, {}, id: "cost_ctr"  %>
+    <%= f.submit "Enter" %>
+  <% end %>
 <% end %>
